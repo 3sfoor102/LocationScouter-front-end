@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import HootList from "./pages/LocationList";
 import * as locationService from "./services/locations";
 import HootDetails from "./pages/HootDetails";
-import HootForm from "./pages/HootForm";
+import HootForm from "./pages/LocationForm";
 import CommentForm from "./components/CommentForm";
 
 const getUserFromToken = () => {

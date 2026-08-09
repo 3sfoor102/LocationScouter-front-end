@@ -14,8 +14,8 @@ const Nav = (props) => {
             { props.user ? (
                 <ul>
                     <li>Welcome, {props.user.username}!</li>
-                    <li><Link to='/locations'>HOOTS</Link></li>
-                    <li><Link to='/locatoins/new'>NEW LOCATION</Link></li>
+                    <li><Link to='/locations'>LOCATIONS</Link></li>
+                    <li><Link to='/locations/new'>NEW LOCATION</Link></li>
                     <li><Link to="/" onClick={handleSignOut}>Sign Out</Link></li>
                 </ul>
             ) : (

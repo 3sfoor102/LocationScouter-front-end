@@ -22,7 +22,7 @@ const show = async (hootId) => {
   }
 }
 
-const create = async (hootFormData) => {
+const create = async (locationFormData) => {
   try {
     const res = await fetch(BASE_URL, {
       method: 'POST',
@@ -30,7 +30,7 @@ const create = async (hootFormData) => {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(hootFormData),
+      body: JSON.stringify(locationFormData),
     })
     return res.json()
   } catch (error) {

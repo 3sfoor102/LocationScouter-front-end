@@ -19,7 +19,7 @@ const LocationList = (props) => {
                     {new Date(location.createdAt).toLocaleDateString()}
                 </span>
                 <span>
-                    {location.reviews?.length || 0} comments
+                    {location.reviews?.length || 0} reviews
                 </span>
                 </footer>
             </article>

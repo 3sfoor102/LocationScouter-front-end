@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
-import * as hootService from "../services/locations";
+import * as locationService from "../services/locations";
 
 const HootForm = (props) => {
-  const { hootId } = useParams();
-  console.log(hootId);
+  const { locationId } = useParams();
+  console.log(locationId);
 
   const initialState = {
     title: "",
@@ -20,26 +20,26 @@ const HootForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (hootId) {
-      props.handleUpdateHoot(hootId, formData);
+    if (locationId) {
+      props.handleUpdateLocation(locationId, formData);
     } else {
-      props.handleAddHoot(formData);
+      props.handleAddLocation(formData);
     }
   };
 
   useEffect(() => {
     const fetchHoot = async () => {
-      const hootData = await hootService.show(hootId);
-      setFormData(hootData);
+      const locationData = await locationService.show(locationID);
+      setFormData(locationData);
     };
-    if (hootId) fetchHoot();
+    if (locationId) fetchHoot();
 
     return () => setFormData(initialState);
-  }, [hootId]);
+  }, [locationId]);
 
   return (
     <main className="card">
-      <h1>{hootId ? "Edit Hoot" : "New Hoot"}</h1>
+      <h1>{locationId ? "Edit Location" : "New Location"}</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title-input">Title</label>
         <input
@@ -50,31 +50,24 @@ const HootForm = (props) => {
           value={formData.title}
           onChange={handleChange}
         />
-        <label htmlFor="text-input">Text</label>
+        <label htmlFor="text-input">Description</label>
         <textarea
           required
           type="text"
-          name="text"
+          name="description"
           id="text-input"
-          value={formData.text}
+          value={formData.description}
           onChange={handleChange}
         />
-        <label htmlFor="category-input">Category</label>
-        <select
+        <label htmlFor="category-input">Image URL</label>
+        <input
           required
-          name="category"
+          name="imageURL"
           id="category-input"
-          value={formData.category}
+          value={formData.imageURL}
           onChange={handleChange}
         >
-          <option value="News">News</option>
-          <option value="Sports">Sports</option>
-          <option value="Games">Games</option>
-          <option value="Movies">Movies</option>
-          <option value="Music">Music</option>
-          <option value="Television">Television</option>
-          <option value="Other">Other</option>
-        </select>
+        </input>
         <button type="submit">SUBMIT</button>
       </form>
     </main>
