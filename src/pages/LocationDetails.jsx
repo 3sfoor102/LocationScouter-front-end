@@ -23,7 +23,7 @@ const LocationDetails = (props) => {
     setLocation({ ...location, reviews: [...location.reviews, newReview] });
   };
 
-  const handleDeleteReview = async (reviewId) => {
+  const handleDeleteLocation = async (reviewId) => {
     console.log("reviewId: ", reviewId);
     const deletedReview = reviewService.deleteComment(locationId, reviewId);
     const filteredReviews = location.reviews.filter((review) => {
@@ -46,16 +46,21 @@ const LocationDetails = (props) => {
           {location.description.toUpperCase()}
         </span>
         <h2>{location.title}</h2>
+        <p className="hoot-text" align="center">
+          <img src={location.imageURL} alt="a location background image" />
+        </p>
+
         <p className="hoot-author">
           Posted by {location.author?.username || "Unknown user"} on{" "}
           <span>{new Date(location.createdAt).toLocaleDateString()}</span>
         </p>
+
         {location.author._id === props.user._id && (
           <div className="actions">
             <button onClick={() => navigate(`/locations/${locationId}/edit`)}>
               Edit
             </button>
-            <button onClick={() => props.handleDeleteReview(locationId)}>
+            <button onClick={() => props.handleDeleteLocation(locationId)}>
               Delete
             </button>
           </div>
@@ -83,7 +88,7 @@ const LocationDetails = (props) => {
                   >
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteReview(review._id)}>
+                  <button onClick={() => handleDeleteLocation(review._id)}>
                     Delete
                   </button>
                 </div>

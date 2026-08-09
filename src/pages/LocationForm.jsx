@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 
 import * as locationService from "../services/locations";
 
-const HootForm = (props) => {
+const LocationForm = (props) => {
   const { locationId } = useParams();
   console.log(locationId);
 
@@ -29,7 +29,7 @@ const HootForm = (props) => {
 
   useEffect(() => {
     const fetchHoot = async () => {
-      const locationData = await locationService.show(locationID);
+      const locationData = await locationService.show(locationId);
       setFormData(locationData);
     };
     if (locationId) fetchHoot();
@@ -75,4 +75,4 @@ const HootForm = (props) => {
   );
 };
 
-export default HootForm;
+export default LocationForm;

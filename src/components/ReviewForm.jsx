@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import * as locationService from "../services/locations";
-import * as commentsService from "../services/reviews";
+import * as reviewsService from "../services/reviews";
 
 const CommentForm = (props) => {
-  const { hootId, commentId } = useParams();
+  const { locationId, reviewId } = useParams();
   const navigate = useNavigate();
 
   const initialState = {
@@ -19,9 +19,9 @@ const CommentForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (hootId && commentId) {
-      commentsService.update(hootId, commentId, formData);
-      navigate(`/hoots/${hootId}`);
+    if (locationId && reviewId) {
+      reviewsService.update(locationId, reviewId, formData);
+      navigate(`/locations/${locationId}`);
     } else {
       props.handleAddComment(formData);
     }
@@ -29,16 +29,16 @@ const CommentForm = (props) => {
   };
 
   useEffect(() => {
-    const fetchHoot = async () => {
-      const hootData = await locationService.show(hootId);
-      console.log(hootData);
-      const foundComment = hootData.comments.find((comment) => {
-        return comment._id === commentId;
+    const fetchReview = async () => {
+      const locationData = await locationService.show(locationId);
+      console.log(locationData);
+      const foundReview = locationData.reviews.find((review) => {
+        return review._id === locationId;
       });
-      setFormData(foundComment);
+      setFormData(foundReview);
     };
-    if (hootId && commentId) fetchHoot();
-  }, [hootId, commentId]);
+    if (locationId && reviewId) fetchReview();
+  }, [locationId, reviewId]);
 
   return (
     <form onSubmit={handleSubmit}>
