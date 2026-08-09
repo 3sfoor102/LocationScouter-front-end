@@ -9,8 +9,8 @@ const HootForm = (props) => {
 
   const initialState = {
     title: "",
-    text: "",
-    category: "News",
+    description: "",
+    imageURL: "",
   };
   const [formData, setFormData] = useState(initialState);
 

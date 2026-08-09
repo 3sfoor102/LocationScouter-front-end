@@ -11,11 +11,11 @@ const HootDetails = (props) => {
   const [hoot, setHoot] = useState(null);
 
   useEffect(() => {
-    const fetchHoot = async () => {
+    const fetchLocation = async () => {
       const hootData = await locationService.show(hootId);
       setHoot(hootData);
     };
-    fetchHoot();
+    fetchLocation();
   }, [hootId]);
 
   const handleAddComment = async (formData) => {

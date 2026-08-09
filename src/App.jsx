@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import SignInForm from "./pages/SignInForm";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
-import HootList from "./pages/HootList";
+import HootList from "./pages/LocationList";
 import * as locationService from "./services/locations";
 import HootDetails from "./pages/HootDetails";
 import HootForm from "./pages/HootForm";
@@ -22,35 +22,35 @@ const App = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState(getUserFromToken());
-  const [hoots, setHoots] = useState([]);
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     const fetchAllLocations = async () => {
       const locationsData = await locationService.index();
-      setHoots(locationsData);
+      setLocations(locationsData);
     };
     if (user) fetchAllLocations();
   }, [user]);
 
-  const handleAddHoot = async (formData) => {
-    const newHoot = await locationService.create(formData);
-    setHoots([newHoot, ...hoots]);
-    navigate("/hoots");
+  const handleAddLocation = async (formData) => {
+    const newLocation = await locationService.create(formData);
+    setLocations([newLocation, ...locations]);
+    navigate("/locations");
   };
 
-  const handleDeleteHoot = async (hootId) => {
-    const deletedHoot = await locationService.deleteHoot(hootId);
-    setHoots(hoots.filter((hoot) => hoot._id !== hootId));
-    navigate("/hoots");
+  const handleDeleteLocation = async (locationId) => {
+    const deletedLocation = await locationService.deleteHoot(locationId);
+    setLocations(locations.filter((location) => location._id !== locationId));
+    navigate("/locations");
   };
 
-  const handleUpdateHoot = async (hootId, formData) => {
-    const updatedHoot = await locationService.update(hootId, formData);
-    const updatedHootsList = hoots.map((hoot) => {
-      return hootId === hoot._id ? updatedHoot : hoot;
+  const handleUpdateLocation = async (locationId, formData) => {
+    const updatedLocation = await locationService.update(locationId, formData);
+    const updatedLocationList = locations.map((location) => {
+      return locationId === location._id ? updatedLocation : location;
     });
-    setHoots(updatedHootsList);
-    navigate(`/hoots/${hootId}`);
+    setLocations(updatedLocationList);
+    navigate(`/locations/${locationId}`);
   };
 
   return (
@@ -64,23 +64,23 @@ const App = () => {
           />
           {user ? (
             <>
-              <Route path="/locations" element={<HootList hoots={hoots} />} />
+              <Route path="/locations" element={<HootList locations={locations} />} />
               <Route
                 path="/locations/:locationId"
                 element={
                   <HootDetails
                     user={user}
-                    handleDeleteHoot={handleDeleteHoot}
+                    handleDeleteLocation={handleDeleteLocation}
                   />
                 }
               />
               <Route
                 path="/locations/new"
-                element={<HootForm handleAddHoot={handleAddHoot} />}
+                element={<HootForm handleAddLocation={handleAddLocation} />}
               />
               <Route
                 path="/locations/:locationId/edit"
-                element={<HootForm handleUpdateHoot={handleUpdateHoot} />}
+                element={<HootForm handleUpdateLocation={handleUpdateLocation} />}
               />
               <Route
                 path="/locations/:locationId/reviews/:reviewId/edit"
