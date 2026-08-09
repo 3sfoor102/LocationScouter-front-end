@@ -7,7 +7,7 @@ import SignInForm from "./pages/SignInForm";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import HootList from "./pages/HootList";
-import * as hootService from "./services/locations";
+import * as locationService from "./services/locations";
 import HootDetails from "./pages/HootDetails";
 import HootForm from "./pages/HootForm";
 import CommentForm from "./components/CommentForm";
@@ -26,26 +26,26 @@ const App = () => {
 
   useEffect(() => {
     const fetchAllLocations = async () => {
-      const hootsData = await locationService.index();
-      setHoots(hootsData);
+      const locationsData = await locationService.index();
+      setHoots(locationsData);
     };
     if (user) fetchAllLocations();
   }, [user]);
 
   const handleAddHoot = async (formData) => {
-    const newHoot = await hootService.create(formData);
+    const newHoot = await locationService.create(formData);
     setHoots([newHoot, ...hoots]);
     navigate("/hoots");
   };
 
   const handleDeleteHoot = async (hootId) => {
-    const deletedHoot = await hootService.deleteHoot(hootId);
+    const deletedHoot = await locationService.deleteHoot(hootId);
     setHoots(hoots.filter((hoot) => hoot._id !== hootId));
     navigate("/hoots");
   };
 
   const handleUpdateHoot = async (hootId, formData) => {
-    const updatedHoot = await hootService.update(hootId, formData);
+    const updatedHoot = await locationService.update(hootId, formData);
     const updatedHootsList = hoots.map((hoot) => {
       return hootId === hoot._id ? updatedHoot : hoot;
     });
