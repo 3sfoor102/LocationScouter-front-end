@@ -25,7 +25,7 @@ const LocationDetails = (props) => {
 
   const handleDeleteLocation = async (reviewId) => {
     console.log("reviewId: ", reviewId);
-    const deletedReview = reviewService.deleteComment(locationId, reviewId);
+    const deletedReview = reviewService.deleteReview(locationId, reviewId);
     const filteredReviews = location.reviews.filter((review) => {
       return review._id !== reviewId;
     });
@@ -75,7 +75,7 @@ const LocationDetails = (props) => {
           {location.reviews.map((review) => (
             <article key={review._id}>
               <header></header>
-              <p>{`${review.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
+              <p>{`${review.author.username} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
               <p>{review.description}</p>
               {review.author._id === props.user._id && (
                 <div className="actions">
@@ -88,7 +88,7 @@ const LocationDetails = (props) => {
                   >
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteLocation(review._id)}>
+                  <button onClick={() => handleDeleteLocation(location._id)}>
                     Delete
                   </button>
                 </div>

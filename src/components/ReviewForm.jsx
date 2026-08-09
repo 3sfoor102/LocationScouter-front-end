@@ -23,7 +23,7 @@ const CommentForm = (props) => {
       reviewsService.update(locationId, reviewId, formData);
       navigate(`/locations/${locationId}`);
     } else {
-      props.handleAddComment(formData);
+      props.handleAddReview(formData);
     }
     setFormData(initialState);
   };

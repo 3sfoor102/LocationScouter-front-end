@@ -1,14 +1,14 @@
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/hoots`
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/locations`
 
-const create = async (hootId, commentFormData) => {
+const create = async (locationId, reviewFormData) => {
   try {
-    const res = await fetch(`${BASE_URL}/${hootId}/comments`, {
+    const res = await fetch(`${BASE_URL}/${locationId}/reviews`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(commentFormData),
+      body: JSON.stringify(reviewFormData),
     })
     return res.json()
   } catch (error) {
@@ -16,9 +16,9 @@ const create = async (hootId, commentFormData) => {
   }
 }
 
-const deleteComment = async (hootId, commentId) => {
+const deleteReview = async (locationId, reviewId) => {
     try {
-        const res = await fetch(`${BASE_URL}/${hootId}/comments/${commentId}`, {
+        const res = await fetch(`${BASE_URL}/${locationId}/reviews/${reviewId}`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -32,9 +32,9 @@ const deleteComment = async (hootId, commentId) => {
 }
 
 
-const update = async (hootId, commentId, formData) => {
+const update = async (locationId, reviewId, formData) => {
   try {
-    const res = await fetch(`${BASE_URL}/${hootId}/comments/${commentId}`, {
+    const res = await fetch(`${BASE_URL}/${locationId}/reviews/${reviewId}`, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -50,6 +50,6 @@ const update = async (hootId, commentId, formData) => {
 
 export {
     create,
-    deleteComment,
+    deleteReview,
     update,
 }
