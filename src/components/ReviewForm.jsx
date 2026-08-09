@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 
 import * as locationService from "../services/locations";
-import * as commentsService from "../services/comments";
+import * as commentsService from "../services/reviews";
 
 const CommentForm = (props) => {
   const { hootId, commentId } = useParams();
@@ -42,7 +42,7 @@ const CommentForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="text-input">Your comment:</label>
+      <label htmlFor="text-input">Your review:</label>
       <textarea
         required
         type="text"

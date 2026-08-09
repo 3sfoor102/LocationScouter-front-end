@@ -10,7 +10,7 @@ import HootList from "./pages/LocationList";
 import * as locationService from "./services/locations";
 import HootDetails from "./pages/LocationDetails";
 import HootForm from "./pages/LocationForm";
-import CommentForm from "./components/CommentForm";
+import CommentForm from "./components/ReviewForm";
 
 const getUserFromToken = () => {
   const token = localStorage.getItem("token");
@@ -64,7 +64,10 @@ const App = () => {
           />
           {user ? (
             <>
-              <Route path="/locations" element={<HootList locations={locations} />} />
+              <Route
+                path="/locations"
+                element={<HootList locations={locations} />}
+              />
               <Route
                 path="/locations/:locationId"
                 element={
@@ -80,7 +83,9 @@ const App = () => {
               />
               <Route
                 path="/locations/:locationId/edit"
-                element={<HootForm handleUpdateLocation={handleUpdateLocation} />}
+                element={
+                  <HootForm handleUpdateLocation={handleUpdateLocation} />
+                }
               />
               <Route
                 path="/locations/:locationId/reviews/:reviewId/edit"

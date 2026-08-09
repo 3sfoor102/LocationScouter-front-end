@@ -1,38 +1,38 @@
 import { useParams, useNavigate } from "react-router";
 import * as locationService from "../services/locations";
 import { useState, useEffect } from "react";
-import CommentForm from "../components/CommentForm";
-import * as commentsService from "../services/comments";
+import ReviewForm from "../components/ReviewForm";
+import * as reviewService from "../services/reviews";
 
-const HootDetails = (props) => {
+const LocationDetails = (props) => {
   const navigate = useNavigate();
-  const { hootId } = useParams();
+  const { locationId } = useParams();
 
-  const [hoot, setHoot] = useState(null);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     const fetchLocation = async () => {
-      const hootData = await locationService.show(hootId);
-      setHoot(hootData);
+      const locationData = await locationService.show(locationId);
+      setLocation(locationData);
     };
     fetchLocation();
-  }, [hootId]);
+  }, [locationId]);
 
-  const handleAddComment = async (formData) => {
-    const newComment = await commentsService.create(hootId, formData);
-    setHoot({ ...hoot, comments: [...hoot.comments, newComment] });
+  const handleAddReview = async (formData) => {
+    const newReview = await reviewService.create(locationId, formData);
+    setLocation({ ...location, reviews: [...location.reviews, newReview] });
   };
 
-  const handleDeleteComment = async (commentId) => {
-    console.log("commentId: ", commentId);
-    const deletedComment = commentsService.deleteComment(hootId, commentId);
-    const filteredComments = hoot.comments.filter((comment) => {
-      return comment._id !== commentId;
+  const handleDeleteReview = async (reviewId) => {
+    console.log("reviewId: ", reviewId);
+    const deletedReview = reviewService.deleteComment(locationId, reviewId);
+    const filteredReviews = location.reviews.filter((review) => {
+      return review._id !== reviewId;
     });
-    setHoot({ ...hoot, comments: filteredComments });
+    setLocation({ ...location, reviews: filteredReviews });
   };
 
-  if (!hoot)
+  if (!location)
     return (
       <main>
         <div className="loader"></div>
@@ -42,44 +42,48 @@ const HootDetails = (props) => {
   return (
     <article className="card hoot-card">
       <header className="hoot-header">
-        <span className="hoot-category">{hoot.category.toUpperCase()}</span>
-        <h2>{hoot.title}</h2>
+        <span className="hoot-category">
+          {location.description.toUpperCase()}
+        </span>
+        <h2>{location.title}</h2>
         <p className="hoot-author">
-          Posted by {hoot.author?.username || "Unknown user"} on{" "}
-          <span>{new Date(hoot.createdAt).toLocaleDateString()}</span>
+          Posted by {location.author?.username || "Unknown user"} on{" "}
+          <span>{new Date(location.createdAt).toLocaleDateString()}</span>
         </p>
-        {hoot.author._id === props.user._id && (
+        {location.author._id === props.user._id && (
           <div className="actions">
-            <button onClick={() => navigate(`/hoots/${hootId}/edit`)}>
+            <button onClick={() => navigate(`/locations/${locationId}/edit`)}>
               Edit
             </button>
-            <button onClick={() => props.handleDeleteHoot(hootId)}>
+            <button onClick={() => props.handleDeleteReview(locationId)}>
               Delete
             </button>
           </div>
         )}
       </header>
-      <p className="hoot-text">{hoot.text}</p>
+      <p className="hoot-text">{location.description}</p>
       <footer className="hoot-footer">
         <section>
-          <h2>Comments</h2>
-          <CommentForm handleAddComment={handleAddComment} />
-          {!hoot.comments.length && <p>There are no comments.</p>}
-          {hoot.comments.map((comment) => (
-            <article key={comment._id}>
+          <h2>Reviews</h2>
+          <ReviewForm handleAddReview={handleAddReview} />
+          {!location.reviews.length && <p>There are no reviews.</p>}
+          {location.reviews.map((review) => (
+            <article key={review._id}>
               <header></header>
-              <p>{`${comment.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
-              <p>{comment.text}</p>
-              {comment.author._id === props.user._id && (
+              <p>{`${review.author.username} posted on ${new Date(comment.createdAt).toLocaleDateString()}`}</p>
+              <p>{review.description}</p>
+              {review.author._id === props.user._id && (
                 <div className="actions">
                   <button
                     onClick={() =>
-                      navigate(`/hoots/${hootId}/comments/${comment._id}/edit`)
+                      navigate(
+                        `/locations/${locationId}/reviews/${review._id}/edit`,
+                      )
                     }
                   >
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteComment(comment._id)}>
+                  <button onClick={() => handleDeleteReview(review._id)}>
                     Delete
                   </button>
                 </div>
@@ -92,4 +96,4 @@ const HootDetails = (props) => {
   );
 };
 
-export default HootDetails;
+export default LocationDetails;
