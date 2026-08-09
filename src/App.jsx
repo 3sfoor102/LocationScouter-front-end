@@ -8,7 +8,7 @@ import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import HootList from "./pages/LocationList";
 import * as locationService from "./services/locations";
-import HootDetails from "./pages/HootDetails";
+import HootDetails from "./pages/LocationDetails";
 import HootForm from "./pages/LocationForm";
 import CommentForm from "./components/CommentForm";
 

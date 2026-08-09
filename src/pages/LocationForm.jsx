@@ -62,6 +62,7 @@ const HootForm = (props) => {
         <label htmlFor="category-input">Image URL</label>
         <input
           required
+          type = "text"
           name="imageURL"
           id="category-input"
           value={formData.imageURL}
