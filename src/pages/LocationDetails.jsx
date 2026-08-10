@@ -3,6 +3,7 @@ import * as locationService from "../services/locations";
 import { useState, useEffect } from "react";
 import ReviewForm from "../components/ReviewForm";
 import * as reviewService from "../services/reviews";
+import * as SunCalc from 'suncalc';
 
 const LocationDetails = (props) => {
   const navigate = useNavigate();
@@ -38,6 +39,8 @@ const LocationDetails = (props) => {
         <div className="loader"></div>
       </main>
     );
+
+    
 
   return (
     <article className="card hoot-card">
