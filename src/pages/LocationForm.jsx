@@ -13,6 +13,8 @@ const LocationForm = (props) => {
     title: "",
     description: "",
     imageURL: "",
+    lat: null,
+    lng: null,
   };
   const [formData, setFormData] = useState(initialState);
 

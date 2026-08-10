@@ -3,7 +3,7 @@ import * as locationService from "../services/locations";
 import { useState, useEffect } from "react";
 import ReviewForm from "../components/ReviewForm";
 import * as reviewService from "../services/reviews";
-import * as SunCalc from 'suncalc';
+import { Map, Marker } from "pigeon-maps";
 
 const LocationDetails = (props) => {
   const navigate = useNavigate();
@@ -24,9 +24,9 @@ const LocationDetails = (props) => {
     setLocation({ ...location, reviews: [...location.reviews, newReview] });
   };
 
-  const handleDeleteLocation = async (reviewId) => {
+  const handleDeleteReview = async (reviewId) => {
     console.log("reviewId: ", reviewId);
-    const deletedReview = reviewService.deleteReview(locationId, reviewId);
+    await reviewService.deleteReview(locationId, reviewId);
     const filteredReviews = location.reviews.filter((review) => {
       return review._id !== reviewId;
     });
@@ -39,8 +39,6 @@ const LocationDetails = (props) => {
         <div className="loader"></div>
       </main>
     );
-
-    
 
   return (
     <article className="card hoot-card">
@@ -58,7 +56,7 @@ const LocationDetails = (props) => {
           <span>{new Date(location.createdAt).toLocaleDateString()}</span>
         </p>
 
-        {location.author._id === props.user._id && (
+        {location.author?._id === props.user?._id && (
           <div className="actions">
             <button onClick={() => navigate(`/locations/${locationId}/edit`)}>
               Edit
@@ -69,7 +67,24 @@ const LocationDetails = (props) => {
           </div>
         )}
       </header>
+      
       <p className="hoot-text">{location.description}</p>
+
+      {location.lat && location.lng && (
+        <div className="location-map-container">
+          <h3>Location Map</h3>
+          <div className="location-map-wrapper">
+            <Map 
+              height={300} 
+              defaultCenter={[location.lat, location.lng]} 
+              defaultZoom={14}
+            >
+              <Marker width={50} anchor={[location.lat, location.lng]} />
+            </Map>
+          </div>
+        </div>
+      )}
+
       <footer className="hoot-footer">
         <section>
           <h2>Reviews</h2>
@@ -80,6 +95,7 @@ const LocationDetails = (props) => {
               <header></header>
               <p>{`${review.author.username} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
               <p>{review.description}</p>
+              
               {review.author._id === props.user._id && (
                 <div className="actions">
                   <button
@@ -91,7 +107,8 @@ const LocationDetails = (props) => {
                   >
                     Edit
                   </button>
-                  <button onClick={() => handleDeleteLocation(location._id)}>
+
+                  <button onClick={() => handleDeleteReview(review._id)}>
                     Delete
                   </button>
                 </div>
