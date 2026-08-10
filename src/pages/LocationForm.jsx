@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import React, { useRef } from 'react';
-import html2pdf from 'html2pdf.js';
+import React, { useRef } from "react";
+import html2pdf from "html2pdf.js";
 
 import * as locationService from "../services/locations";
+import js from "@eslint/js";
 
 const LocationForm = (props) => {
   const { locationId } = useParams();
@@ -15,6 +16,19 @@ const LocationForm = (props) => {
     imageURL: "",
   };
   const [formData, setFormData] = useState(initialState);
+  const [showReceipt, setShowReceipt] = useState(false);
+  const printAreaRef = useRef();
+
+  const PDFgenrator = () => {
+    const element = printAreaRef.current;
+    const options = {
+      margin: 0.5,
+      filename: "A",
+      image: { type: "jpeg", quality: 0.98 },
+      htm2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
+  };
 
   const handleChange = (evt) => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
@@ -64,13 +78,12 @@ const LocationForm = (props) => {
         <label htmlFor="category-input">Image URL</label>
         <input
           required
-          type = "text"
+          type="text"
           name="imageURL"
           id="category-input"
           value={formData.imageURL}
           onChange={handleChange}
-        >
-        </input>
+        ></input>
         <button type="submit">SUBMIT</button>
       </form>
     </main>
