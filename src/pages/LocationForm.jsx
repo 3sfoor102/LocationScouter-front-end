@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import React, { useRef } from "react";
-
+import LocationMapPicker from "../components/LocationMapPicker";
 import * as locationService from "../services/locations";
 import js from "@eslint/js";
 

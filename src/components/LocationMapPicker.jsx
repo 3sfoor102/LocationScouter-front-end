@@ -1,13 +1,29 @@
-import { useState } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css"
-import L from "leaflet"
+import { latLng } from "leaflet"
+import {Map, Marker} from "pigeon-maps"
 
 
-delete L.icon.Default.prototype._getIconUrl
-L.Icon.Default.mergeOptions({
-iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+const LocationMapPicker = ({formData, setFormData}) => {
+return (
+    <Map
+    height={300}
+    defaultCenter={[26.14, 50.48]}
+    defaultZoom={12}
+    onClick={({latLng}) => {
+        setFormData({...formData, lat: latLng[0], lng: latLng[1]})
+    }}
+    
+    />
+)
+}
 
-})
+
+
+
+
+
+
+
+
+
+
+export default  LocationMapPicker
