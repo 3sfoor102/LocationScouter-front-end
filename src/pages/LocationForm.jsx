@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
+import React, { useRef } from 'react';
+import html2pdf from 'html2pdf.js';
 
 import * as locationService from "../services/locations";
 
