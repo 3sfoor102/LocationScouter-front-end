@@ -19,15 +19,18 @@ const LocationForm = (props) => {
   const [showReceipt, setShowReceipt] = useState(false);
   const printAreaRef = useRef();
 
-  const PDFgenrator = () => {
+  const PDFgenerate = (e) => {
+        e.preventDefault(); 
+
     const element = printAreaRef.current;
     const options = {
       margin: 0.5,
       filename: "A",
       image: { type: "jpeg", quality: 0.98 },
-      htm2canvas: { scale: 2, useCORS: true },
+      html2canvas: { scale: 2, useCORS: true },
       jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
     };
+    html2pdf().set(options).from(element).save()
   };
 
   const handleChange = (evt) => {
@@ -36,6 +39,7 @@ const LocationForm = (props) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setShowReceipt(true)
     if (locationId) {
       props.handleUpdateLocation(locationId, formData);
     } else {
@@ -84,7 +88,17 @@ const LocationForm = (props) => {
           value={formData.imageURL}
           onChange={handleChange}
         ></input>
+        <button type="button" onClick={PDFgenerate}>Download as PDF</button>
         <button type="submit">SUBMIT</button>
+        <div ref={printAreaRef} className="">
+          <h1>Submission Receipt</h1>
+          <p><strong>Date: </strong>{new Date().toLocaleDateString()}</p>
+          <p><strong>Title: </strong> {formData.title}</p>
+          <p><strong>Description: </strong> {formData.description}</p>
+          {/* <p><stong>Title: </stong> {formData.imageURL}</p> */}
+
+        </div>
+        
       </form>
     </main>
   );
