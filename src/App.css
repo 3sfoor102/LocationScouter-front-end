@@ -143,11 +143,19 @@ button:disabled {
 }
 
 .hoot-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto; 
+  justify-items: center; 
+}
+
+.hoot-list a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
 }
 
 .loader {
