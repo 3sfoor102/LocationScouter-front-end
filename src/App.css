@@ -173,3 +173,15 @@ button:disabled {
 .icon {
   height: 2em;
 }
+
+.map-picker-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.map-picker-wrapper {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+}

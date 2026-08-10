@@ -1,4 +1,3 @@
-import { latLng } from "leaflet"
 import {Map, Marker} from "pigeon-maps"
 
 
@@ -12,18 +11,13 @@ return (
         setFormData({...formData, lat: latLng[0], lng: latLng[1]})
     }}
     
-    />
+    >
+    {formData.lat && formData.lng && (
+        <Marker width={50} anchor={[formData.lat, formData.lng]}/>
+    )}
+    </Map>
 )
 }
-
-
-
-
-
-
-
-
-
 
 
 export default  LocationMapPicker

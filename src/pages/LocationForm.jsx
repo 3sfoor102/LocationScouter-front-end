@@ -70,6 +70,13 @@ const LocationForm = (props) => {
           value={formData.imageURL}
           onChange={handleChange}
         ></input>
+        <div className="map-picker-container">
+          <label>Select Location on Map</label>
+          <div className="map-picker-wrapper">
+            <LocationMapPicker formData={formData} setFormData={setFormData} />
+          </div>
+        </div>
+
         <button type="submit">SUBMIT</button>
  
       </form>
