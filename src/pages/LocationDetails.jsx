@@ -67,7 +67,7 @@ const LocationDetails = (props) => {
           {location.description.toUpperCase()}
         </span>
         <span className="hoot-text">
-          {location.points? location.points: 'Add a location to get 10 points!'}
+          {location.author.points? location.author.points:'Add a location to get 10 points!' }
         </span>
         <h2>{location.title}</h2>
         <p className="hoot-text" align="center">
