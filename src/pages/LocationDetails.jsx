@@ -74,6 +74,11 @@ const LocationDetails = (props) => {
               ? location.author.points
               : "Add a location to get 10 points!"}
           </p>
+          <h3>
+            {location.author.points >= 30 && location.author.points <= 49
+              ? `You are a Scoutuer With ${location.author.points} Points !`
+              : `${location.author.username.toUpperCase()} points are ${location.author.points}`}
+          </h3>
         </span>
         <h2>{location.title}</h2>
         <p className="hoot-text" align="center">
