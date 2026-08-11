@@ -4,12 +4,14 @@ import { useState, useEffect } from "react";
 import ReviewForm from "../components/ReviewForm";
 import * as reviewService from "../services/reviews";
 import { Map, Marker } from "pigeon-maps";
+import axios from "axios";
 
 const LocationDetails = (props) => {
   const navigate = useNavigate();
   const { locationId } = useParams();
 
   const [location, setLocation] = useState(null);
+  const [weather, setWeather] = useState(null);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -40,6 +42,43 @@ const LocationDetails = (props) => {
       </main>
     );
 
+  useEffect(() => {
+    const fetchWeather = async () => {
+      if (location?.lat && location?.lng) {
+        try {
+          const weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
+          const query = `{location.lat}, ${location.lng}`;
+          const res = await axios.get(
+            `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${query}`,
+          );
+          setWeather(res.data.current);
+        } catch (error) {
+          console.error("Error fetching weather:", error);
+        }
+      }
+    }
+    fetchWeather()
+  }, [location])
+
+  //   useEffect(() => {
+  //   const fetchWeather = async () => {
+  //     if (location?.lat && location?.lng) {
+  //       try {
+  //         const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
+  //         const query = `${location.lat},${location.lng}`;
+
+  //         const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}`);
+
+  //         setWeather(response.data.current);
+  //       } catch (error) {
+  //         console.error("Error fetching weather:", error);
+  //       }
+  //     }
+  //   };
+
+  //   fetchWeather();
+  // }, [location]);
+
   return (
     <article className="card hoot-card">
       <header className="hoot-header">
@@ -67,16 +106,16 @@ const LocationDetails = (props) => {
           </div>
         )}
       </header>
-      
+
       <p className="hoot-text">{location.description}</p>
 
       {location.lat && location.lng && (
         <div className="location-map-container">
           <h3>Location Map</h3>
           <div className="location-map-wrapper">
-            <Map 
-              height={300} 
-              defaultCenter={[location.lat, location.lng]} 
+            <Map
+              height={300}
+              defaultCenter={[location.lat, location.lng]}
               defaultZoom={14}
             >
               <Marker width={50} anchor={[location.lat, location.lng]} />
@@ -95,7 +134,7 @@ const LocationDetails = (props) => {
               <header></header>
               <p>{`${review.author.username} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
               <p>{review.description}</p>
-              
+
               {review.author._id === props.user._id && (
                 <div className="actions">
                   <button
