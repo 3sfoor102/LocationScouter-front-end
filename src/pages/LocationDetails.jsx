@@ -67,7 +67,9 @@ const LocationDetails = (props) => {
           {location.description.toUpperCase()}
         </span>
         <span className="hoot-text">
-          {location.author.points? location.author.points:'Add a location to get 10 points!' }
+          {location.author?.points
+            ? location.author.points
+            : "Add a location to get 10 points!"}
         </span>
         <h2>{location.title}</h2>
         <p className="hoot-text" align="center">
@@ -153,7 +155,7 @@ const LocationDetails = (props) => {
             </Map>
           </div>
           <div style={{ marginTop: "10px", textAlign: "center" }}>
-            <a 
+            <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}`}
               target="_blank"
               rel="noreferrer"
@@ -164,15 +166,13 @@ const LocationDetails = (props) => {
                 color: "white",
                 textDecoration: "none",
                 borderRadius: "5px",
-                fontWeight: "bold"
+                fontWeight: "bold",
               }}
             >
               🚗 Get Directions
             </a>
           </div>
         </div>
-
-        
       )}
 
       <footer className="hoot-footer">
@@ -181,30 +181,30 @@ const LocationDetails = (props) => {
           <ReviewForm handleAddReview={handleAddReview} />
           {!location.reviews.length && <p>There are no reviews.</p>}
           {location.reviews.map((review) => (
-            <article key={review._id}>
-              <header></header>
-              <p>{`${review.author.username} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
-              <p>{review.description}</p>
+  <article key={review._id}>
+    <header></header>
+    <p>{`${review.author?.username || "Unknown User"} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
+    <p>{review.description}</p>
 
-              {review.author._id === props.user._id && (
-                <div className="actions">
-                  <button
-                    onClick={() =>
-                      navigate(
-                        `/locations/${locationId}/reviews/${review._id}/edit`,
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
+    {review.author?._id === props.user?._id && props.user && (
+      <div className="actions">
+        <button
+          onClick={() =>
+            navigate(
+              `/locations/${locationId}/reviews/${review._id}/edit`,
+            )
+          }
+        >
+          Edit
+        </button>
 
-                  <button onClick={() => handleDeleteReview(review._id)}>
-                    Delete
-                  </button>
-                </div>
-              )}
-            </article>
-          ))}
+        <button onClick={() => handleDeleteReview(review._id)}>
+          Delete
+        </button>
+      </div>
+    )}
+  </article>
+))}
         </section>
       </footer>
     </article>
