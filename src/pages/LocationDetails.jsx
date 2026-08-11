@@ -62,6 +62,12 @@ const LocationDetails = (props) => {
 
   return (
     <article className="card hoot-card">
+      <h3>PROJECT TASK LIST</h3>
+      <ol>
+        <li>Add a link with conditional badge Visibility for user's points</li>
+        <li>Edit All the CSS layout</li>
+        <li>Fix reviews page errors</li>
+      </ol>
       <header className="hoot-header">
         <span className="hoot-category">
           {location.description.toUpperCase()}
