@@ -66,6 +66,9 @@ const LocationDetails = (props) => {
         <span className="hoot-category">
           {location.description.toUpperCase()}
         </span>
+        <span className="hoot-text">
+          {location.points? location.points: 'Add a location to get 10 points!'}
+        </span>
         <h2>{location.title}</h2>
         <p className="hoot-text" align="center">
           <img src={location.imageURL} alt="a location background image" />

@@ -7,7 +7,6 @@ import js from "@eslint/js";
 
 const LocationForm = (props) => {
   const { locationId } = useParams();
-  console.log(locationId);
 
   const initialState = {
     title: "",
@@ -77,6 +76,7 @@ const LocationForm = (props) => {
           <div className="map-picker-wrapper">
             <LocationMapPicker formData={formData} setFormData={setFormData} />
           </div>
+
         </div>
 
         <button type="submit">SUBMIT</button>
