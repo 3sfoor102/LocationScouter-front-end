@@ -149,7 +149,27 @@ const LocationDetails = (props) => {
               <Marker width={50} anchor={[location.lat, location.lng]} />
             </Map>
           </div>
+          <div style={{ marginTop: "10px", textAlign: "center" }}>
+            <a 
+              href={`https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                display: "inline-block",
+                padding: "10px 20px",
+                backgroundColor: "#4285F4",
+                color: "white",
+                textDecoration: "none",
+                borderRadius: "5px",
+                fontWeight: "bold"
+              }}
+            >
+              🚗 Get Directions
+            </a>
+          </div>
         </div>
+
+        
       )}
 
       <footer className="hoot-footer">
