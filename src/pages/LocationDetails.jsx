@@ -35,19 +35,12 @@ const LocationDetails = (props) => {
     setLocation({ ...location, reviews: filteredReviews });
   };
 
-  if (!location)
-    return (
-      <main>
-        <div className="loader"></div>
-      </main>
-    );
-
   useEffect(() => {
     const fetchWeather = async () => {
       if (location?.lat && location?.lng) {
         try {
           const weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;
-          const query = `{location.lat}, ${location.lng}`;
+          const query = `${location.lat}, ${location.lng}`;
           const res = await axios.get(
             `https://api.weatherapi.com/v1/current.json?key=${weatherApiKey}&q=${query}`,
           );
@@ -56,28 +49,16 @@ const LocationDetails = (props) => {
           console.error("Error fetching weather:", error);
         }
       }
-    }
-    fetchWeather()
-  }, [location])
+    };
+    fetchWeather();
+  }, [location]);
 
-  //   useEffect(() => {
-  //   const fetchWeather = async () => {
-  //     if (location?.lat && location?.lng) {
-  //       try {
-  //         const apiKey = import.meta.env.VITE_WEATHER_API_KEY;
-  //         const query = `${location.lat},${location.lng}`;
-
-  //         const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${query}`);
-
-  //         setWeather(response.data.current);
-  //       } catch (error) {
-  //         console.error("Error fetching weather:", error);
-  //       }
-  //     }
-  //   };
-
-  //   fetchWeather();
-  // }, [location]);
+  if (!location)
+    return (
+      <main>
+        <div className="loader"></div>
+      </main>
+    );
 
   return (
     <article className="card hoot-card">
@@ -108,6 +89,53 @@ const LocationDetails = (props) => {
       </header>
 
       <p className="hoot-text">{location.description}</p>
+      {weather && (
+        <div
+          className="weather-container"
+          style={{
+            margin: "20px 0",
+            padding: "15px",
+            backgroundColor: "#f8f9fa",
+            borderRadius: "8px",
+            border: "1px solid #e0e0e0",
+          }}
+        >
+          <h3 style={{ marginTop: 0 }}>Current Scout Conditions</h3>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                fontWeight: "bold",
+              }}
+            >
+              <img src={weather.condition.icon} alt="weather icon" />
+              <span>{weather.temp_c}°C</span>
+            </div>
+            <div>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Cloud Cover:</strong> {weather.cloud}%
+              </p>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Visibility:</strong> {weather.vis_km} km
+              </p>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Condition:</strong> {weather.condition.text}
+              </p>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Wind KPH:</strong> {weather.wind_kph}
+              </p>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Humidity:</strong> {weather.humidity}
+              </p>
+              <p style={{ margin: "5px 0" }}>
+                <strong>Feels Like:</strong> {weather.feelslike_c}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {location.lat && location.lng && (
         <div className="location-map-container">
