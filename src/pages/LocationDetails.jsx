@@ -67,6 +67,7 @@ const LocationDetails = (props) => {
         <li>Add a link with conditional badge Visibility for user's points</li>
         <li>Edit All the CSS layout</li>
         <li>Fix reviews page errors</li>
+        <li>Use Cloudinary</li>
       </ol>
       <header className="hoot-header">
         <span className="hoot-category">

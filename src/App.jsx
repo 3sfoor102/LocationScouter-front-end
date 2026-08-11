@@ -91,6 +91,10 @@ const App = () => {
                 path="/locations/:locationId/reviews/:reviewId/edit"
                 element={<CommentForm />}
               />
+              <Route
+                path="/dashboard"
+                element={<Dashboard />}
+              />
             </>
           ) : (
             <>
