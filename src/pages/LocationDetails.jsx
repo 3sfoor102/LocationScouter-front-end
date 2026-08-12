@@ -67,15 +67,13 @@ const LocationDetails = (props) => {
 
       <div className="hoot-header">
         <h2>{location.title}</h2>
-        <p className="hoot-author" style={{ marginBottom: "16px" }}>
+        <p className="hoot-author location-author-spacing">
           Scouted by{" "}
           <strong>{location.author?.username || "Unknown user"}</strong> on{" "}
           {new Date(location.createdAt).toLocaleDateString()}
         </p>
 
-        {/* --- Dashboard Widget Layout --- */}
         <div className="dashboard-widgets">
-          {/* Top Wide Card: Score */}
           <div className="widget-card score-widget">
             <div className="score-info">
               <span className="widget-title">Author Scout Score</span>
@@ -103,9 +101,7 @@ const LocationDetails = (props) => {
             <div className="progress-ring"></div>
           </div>
 
-          {/* Bottom Grid: 3 Square Cards */}
           <div className="widget-grid-3">
-            {/* Card 1: Reviews */}
             <div className="widget-card mini-widget">
               <span className="widget-title">Reviews</span>
               <span className="mini-value">
@@ -128,48 +124,24 @@ const LocationDetails = (props) => {
               </div>
             </div>
 
-            {/* Card 2: Coordinates */}
-            {weather ? (
-              <div className="widget-card mini-widget">
-                <span className="widget-title">Humidity</span>
-                <div className="weather-val-row">
-                  <span className="mini-value" style={{ marginBottom: 0 }}>
-                    {weather.humidity}%
-                  </span>
-                  <img
-                    src={weather.condition.icon}
-                    alt="weather"
-                    className="mini-weather-icon"
-                  />
-                </div>
-                <div className="mini-footer">
-                  <span
-                    className="widget-subtext"
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      marginTop: "8px",
-                    }}
-                  >
-                    {weather.humidity}
-                  </span>
-                </div>
+            {/* Card 2: Coordinates (Fixed) */}
+            <div className="widget-card mini-widget">
+              <span className="widget-title">Coordinates</span>
+              <span className="mini-value coordinate-font-adjust">
+                {location.lat ? location.lat.toFixed(2) : "N/A"}
+              </span>
+              <div className="mini-footer">
+                <span className="widget-subtext coordinate-subtext-adjust">
+                  Lng: {location.lng ? location.lng.toFixed(2) : "N/A"}
+                </span>
               </div>
-            ) : (
-              <div className="widget-card mini-widget">
-                <span className="widget-title">Weather</span>
-                <span className="mini-value">--</span>
-                <span className="widget-subtext">Loading...</span>
-              </div>
-            )}
+            </div>
 
-            {/* Card 3: Weather */}
             {weather ? (
               <div className="widget-card mini-widget">
                 <span className="widget-title">Weather</span>
                 <div className="weather-val-row">
-                  <span className="mini-value" style={{ marginBottom: 0 }}>
+                  <span className="mini-value weather-value-reset">
                     {weather.temp_c}°C
                   </span>
                   <img
@@ -179,15 +151,7 @@ const LocationDetails = (props) => {
                   />
                 </div>
                 <div className="mini-footer">
-                  <span
-                    className="widget-subtext"
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      marginTop: "8px",
-                    }}
-                  >
+                  <span className="widget-subtext weather-subtext-ellipsis">
                     {weather.condition.text}
                   </span>
                 </div>
@@ -201,62 +165,41 @@ const LocationDetails = (props) => {
             )}
           </div>
         </div>
-        {/* --- End Dashboard Widgets --- */}
 
         {location.author?._id === props.user?._id && (
-          <div className="actions" style={{ marginBottom: "24px" }}>
+          <div className="actions location-actions-spacing">
             <button
               onClick={() => navigate(`/locations/${locationId}/edit`)}
-              style={{
-                backgroundColor: "var(--color-surface-light)",
-                color: "var(--color-text)",
-                border: "1px solid var(--color-border)",
-              }}
+              className="btn-edit-theme"
             >
               Edit
             </button>
 
-            {/* Popover trigger button */}
             <button
               type="button"
               className="submit btn-delete-action"
-              popovertarget="delete-popover"
-              style={{ backgroundColor: "var(--color-error)", color: "#fff" }}
+              popoverTarget="delete-popover"
             >
               Delete
             </button>
 
-            {/* The actual popover menu */}
             <div
               id="delete-popover"
               popover="auto"
-              style={{
-                padding: "24px",
-                borderRadius: "var(--radius-md)",
-                border: "1px solid var(--color-border)",
-                backgroundColor: "var(--color-surface)",
-                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                margin: "auto", // Centers the popover natively
-              }}
+              className="delete-popover-box"
             >
-              <h3 style={{ marginTop: 0 }}>Confirm Delete</h3>
+              <h3 className="popover-title-spacing">Confirm Delete</h3>
               <p>
                 Are you sure you want to delete this location? This cannot be
                 undone.
               </p>
 
-              <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
+              <div className="popover-actions-flex">
                 <button
                   type="button"
-                  popovertarget="delete-popover"
-                  popovertargetaction="hide"
-                  style={{
-                    backgroundColor: "var(--color-surface-light)",
-                    color: "var(--color-text)",
-                    border: "1px solid var(--color-border)",
-                    padding: "8px 16px",
-                    cursor: "pointer",
-                  }}
+                  popoverTargetAction="delete-popover"
+                  popoverTargetAction="hide"
+                  className="btn-popover-cancel"
                 >
                   Cancel
                 </button>
@@ -264,14 +207,7 @@ const LocationDetails = (props) => {
                 <button
                   type="button"
                   onClick={() => props.handleDeleteLocation(locationId)}
-                  style={{
-                    backgroundColor: "var(--color-error)",
-                    color: "#fff",
-                    border: "none",
-                    padding: "8px 16px",
-                    borderRadius: "4px",
-                    cursor: "pointer",
-                  }}
+                  className="btn-popover-confirm"
                 >
                   Yes, Delete
                 </button>
@@ -281,11 +217,11 @@ const LocationDetails = (props) => {
         )}
       </div>
 
-      <p style={{ lineHeight: "1.6" }}>{location.description}</p>
+      <p className="description-text-style">{location.description}</p>
 
       {location.lat && location.lng && (
-        <div className="location-map-container" style={{ marginTop: "32px" }}>
-          <h3 style={{ marginBottom: "12px" }}>Location Map</h3>
+        <div className="location-map-container location-map-margin">
+          <h3 className="map-title-spacing">Location Map</h3>
           <div className="location-map-wrapper">
             <Map
               height={300}
@@ -295,24 +231,12 @@ const LocationDetails = (props) => {
               <Marker width={50} anchor={[location.lat, location.lng]} />
             </Map>
           </div>
-          <div style={{ marginTop: "16px" }}>
+          <div className="directions-btn-wrapper">
             <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}`}
               target="_blank"
               rel="noreferrer"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: "16px 24px",
-                backgroundColor: "var(--color-primary)",
-                color: "var(--color-surface)",
-                textDecoration: "none",
-                borderRadius: "var(--radius-pill)",
-                fontWeight: "bold",
-                width: "100%",
-                transition: "background-color 0.2s ease",
-              }}
+              className="directions-anchor-btn"
             >
               Get Directions
             </a>
@@ -320,93 +244,46 @@ const LocationDetails = (props) => {
         </div>
       )}
 
-      <footer
-        className="hoot-footer"
-        style={{ borderTop: "none", marginTop: "40px", paddingTop: 0 }}
-      >
-        <section style={{ width: "100%" }}>
-          <h3
-            style={{
-              marginBottom: "16px",
-              borderBottom: "1px solid var(--color-border)",
-              paddingBottom: "12px",
-            }}
-          >
-            Reviews
-          </h3>
+      <footer className="hoot-footer footer-override">
+        <section className="footer-section-width">
+          <h3 className="reviews-header-style">Reviews</h3>
           <ReviewForm handleAddReview={handleAddReview} />
 
-          <div style={{ marginTop: "32px" }}>
+          <div className="reviews-container-spacing">
             {!location.reviews.length && (
-              <p style={{ color: "var(--color-text-light)" }}>
+              <p className="no-reviews-text">
                 No reviews yet. Be the first to review this location!
               </p>
             )}
 
             {location.reviews.map((review) => (
               <article key={review._id} className="review-card">
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                    marginBottom: "8px",
-                  }}
-                >
-                  <p
-                    style={{
-                      color: "var(--color-text)",
-                      fontWeight: "bold",
-                      margin: 0,
-                    }}
-                  >
+                <div className="review-row-flex">
+                  <p className="review-author-text">
                     {review.author?.username || "Unknown User"}
                   </p>
-                  <p
-                    style={{
-                      fontSize: "0.8rem",
-                      color: "var(--color-text-light)",
-                      margin: 0,
-                    }}
-                  >
+                  <p className="review-date-text">
                     {new Date(review.createdAt).toLocaleDateString()}
                   </p>
                 </div>
 
-                <p style={{ margin: "12px 0", lineHeight: "1.5" }}>
-                  {review.description}
-                </p>
+                <p className="review-desc-style">{review.description}</p>
 
                 {review.author?._id === props.user?._id && props.user && (
-                  <div
-                    className="actions"
-                    style={{ marginTop: "16px", gap: "8px" }}
-                  >
+                  <div className="actions review-actions-flex">
                     <button
                       onClick={() =>
                         navigate(
                           `/locations/${locationId}/reviews/${review._id}/edit`,
                         )
                       }
-                      style={{
-                        padding: "8px 16px",
-                        fontSize: "0.85rem",
-                        backgroundColor: "var(--color-surface)",
-                        color: "var(--color-text)",
-                        border: "1px solid var(--color-border)",
-                      }}
+                      className="btn-review-edit"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteReview(review._id)}
-                      style={{
-                        padding: "8px 16px",
-                        fontSize: "0.85rem",
-                        backgroundColor: "var(--color-surface)",
-                        color: "var(--color-error)",
-                        border: "1px solid var(--color-border)",
-                      }}
+                      className="btn-review-delete"
                     >
                       Delete
                     </button>

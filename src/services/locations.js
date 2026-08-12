@@ -1,77 +1,89 @@
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/locations`
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/locations`;
 
 const index = async () => {
   try {
     const res = await fetch(BASE_URL, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    })
-    return res.json()
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    return res.json();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const show = async (hootId) => {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    })
-    return res.json()
+      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    });
+    return res.json();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const create = async (locationFormData) => {
   try {
     const res = await fetch(BASE_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(locationFormData),
-    })
-    return res.json()
+    });
+    return res.json();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 const deleteHoot = async (hootId) => {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-    })
-    return res.json()
+    });
+    return res.json();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 async function update(hootId, hootFormData) {
   try {
     const res = await fetch(`${BASE_URL}/${hootId}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(hootFormData),
-    })
-    return res.json()
+    });
+    return res.json();
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
 
-export { 
-  index,
-  show,
-  create,
-  deleteHoot,
-  update
-}
+export const getUploadSignature = async () => {
+  try {
+    const res = await fetch(`http://localhost:3000/upload/signature`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    
+    if (!res.ok) throw new Error("Failed to get signature");
+    
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export { index, show, create, deleteHoot, update };

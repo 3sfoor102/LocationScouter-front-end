@@ -551,13 +551,6 @@ button:disabled {
   color: black;
 }
 
-.btn-delete-action {
-  background-color: var(--primary) !important;
-  color: #121214 !important;
-  border: none !important;
-  transition: background-color 0.2s ease, color 0.2s ease !important;
-}
-
 .btn-delete-action:hover {
   background-color: #dc2626 !important;
   color: #ffffff !important;
