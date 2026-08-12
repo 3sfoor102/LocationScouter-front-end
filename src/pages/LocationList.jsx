@@ -10,8 +10,7 @@ const LocationList = (props) => {
               className="card-image-header"
               style={{ backgroundImage: `url(${location.imageURL})` }}
             ></header>
-            <span className="hoot-category">{location.title}</span>
-            <h2>{location.description}</h2>
+            <h2 className="list-title">{location.title}</h2>
             <p className="hoot-author">
               Scouted by {location.author?.username || "Unknown user"}
             </p>

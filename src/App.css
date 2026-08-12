@@ -60,7 +60,9 @@ form label {
   margin-bottom: -12px;
 }
 
-form input, textarea, select {
+form input,
+textarea,
+select {
   padding: 16px;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
@@ -71,7 +73,8 @@ form input, textarea, select {
   transition: all 0.2s ease;
 }
 
-form input:focus, textarea:focus {
+form input:focus,
+textarea:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 1px var(--color-primary);
   outline: none;
@@ -93,7 +96,9 @@ button {
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
+  transition:
+    transform 0.1s ease,
+    background-color 0.2s ease;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -138,7 +143,7 @@ button:disabled {
 }
 
 .card-image-header::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -160,7 +165,7 @@ button:disabled {
 }
 
 .hoot-category {
-  background-color: var(--color-surface-light);
+  background-color: pink var(--color-surface-light);
   color: var(--color-text);
   border-radius: var(--radius-pill);
   padding: 8px 16px;
@@ -199,7 +204,9 @@ button:disabled {
   height: 100%;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   margin: 0;
 }
 
@@ -231,7 +238,8 @@ button:disabled {
   gap: 16px;
 }
 
-.map-picker-wrapper, .location-map-wrapper {
+.map-picker-wrapper,
+.location-map-wrapper {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -249,7 +257,9 @@ button:disabled {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 768px) {
@@ -258,7 +268,7 @@ button:disabled {
     gap: 16px;
     padding: 20px;
   }
-  
+
   nav ul {
     flex-wrap: wrap;
     justify-content: center;
@@ -278,7 +288,7 @@ button:disabled {
     margin: -16px -16px 16px -16px;
     height: 220px;
   }
-  
+
   .weather-container > div {
     flex-direction: column;
     align-items: flex-start !important;
@@ -308,13 +318,13 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 /* Adds a little star icon next to the points */
 .points-badge::before {
-  content: '★'; 
-  color: #F59E0B; /* Subtle gold */
+  content: "★";
+  color: #f59e0b; /* Subtle gold */
   font-size: 1.1em;
 }
 
@@ -324,7 +334,9 @@ button:disabled {
   padding: 20px;
   margin-bottom: 16px;
   border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .review-card:hover {
@@ -365,12 +377,12 @@ button:disabled {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .points-badge::before {
-  content: '★'; 
-  color: #F59E0B;
+  content: "★";
+  color: #f59e0b;
   font-size: 1.1em;
 }
 
@@ -386,7 +398,9 @@ button:disabled {
   padding: 20px;
   margin-bottom: 16px;
   border: 1px solid var(--color-border);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .review-card:hover {
@@ -446,7 +460,7 @@ button:disabled {
 }
 
 .score-status {
-  color: #10B981; /* A subtle green to match the image's "Great" */
+  color: #10b981; /* A subtle green to match the image's "Great" */
   font-weight: 600;
   font-size: 1rem;
 }
@@ -518,11 +532,11 @@ button:disabled {
   .widget-grid-3 {
     gap: 8px;
   }
-  
+
   .mini-widget {
     padding: 12px;
   }
-  
+
   .mini-value {
     font-size: 1.4rem;
   }
@@ -530,4 +544,21 @@ button:disabled {
   .widget-title {
     font-size: 0.75rem;
   }
+}
+
+
+.list-title {
+  color: black;
+}
+
+.btn-delete-action {
+  background-color: var(--primary) !important;
+  color: #121214 !important;
+  border: none !important;
+  transition: background-color 0.2s ease, color 0.2s ease !important;
+}
+
+.btn-delete-action:hover {
+  background-color: #dc2626 !important;
+  color: #ffffff !important;
 }

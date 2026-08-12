@@ -215,12 +215,68 @@ const LocationDetails = (props) => {
             >
               Edit
             </button>
+
+            {/* Popover trigger button */}
             <button
-              onClick={() => props.handleDeleteLocation(locationId)}
+              type="button"
+              className="submit btn-delete-action"
+              popovertarget="delete-popover"
               style={{ backgroundColor: "var(--color-error)", color: "#fff" }}
             >
               Delete
             </button>
+
+            {/* The actual popover menu */}
+            <div
+              id="delete-popover"
+              popover="auto"
+              style={{
+                padding: "24px",
+                borderRadius: "var(--radius-md)",
+                border: "1px solid var(--color-border)",
+                backgroundColor: "var(--color-surface)",
+                boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                margin: "auto", // Centers the popover natively
+              }}
+            >
+              <h3 style={{ marginTop: 0 }}>Confirm Delete</h3>
+              <p>
+                Are you sure you want to delete this location? This cannot be
+                undone.
+              </p>
+
+              <div style={{ display: "flex", gap: "12px", marginTop: "20px" }}>
+                <button
+                  type="button"
+                  popovertarget="delete-popover"
+                  popovertargetaction="hide"
+                  style={{
+                    backgroundColor: "var(--color-surface-light)",
+                    color: "var(--color-text)",
+                    border: "1px solid var(--color-border)",
+                    padding: "8px 16px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => props.handleDeleteLocation(locationId)}
+                  style={{
+                    backgroundColor: "var(--color-error)",
+                    color: "#fff",
+                    border: "none",
+                    padding: "8px 16px",
+                    borderRadius: "4px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Yes, Delete
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
