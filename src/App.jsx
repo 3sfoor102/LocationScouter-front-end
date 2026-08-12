@@ -11,7 +11,7 @@ import * as locationService from "./services/locations";
 import LocationDetails from "./pages/LocationDetails";
 import LocationForm from "./pages/LocationForm";
 import ReviewForm from "./components/ReviewForm";
-
+import ErrorPage from "./components/ErrorPage";
 const getUserFromToken = () => {
   const token = localStorage.getItem("token");
   if (!token) return null;
@@ -23,7 +23,7 @@ const App = () => {
   const [user, setUser] = useState(getUserFromToken());
   const [locations, setLocations] = useState([]);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchAllLocations = async () => {
       const locationsData = await locationService.index();
       if (locationsData && locationsData.length !== undefined) {
@@ -94,6 +94,7 @@ useEffect(() => {
                 element={<ReviewForm />}
               />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="*" element={<ErrorPage />} />
             </>
           ) : (
             <>
