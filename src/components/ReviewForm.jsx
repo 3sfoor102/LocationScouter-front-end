@@ -7,7 +7,7 @@ const CommentForm = (props) => {
   const { locationId, reviewId } = useParams();
   const navigate = useNavigate();
   const initialState = {
-    text: "",
+    description: "",
   };
   const [formData, setFormData] = useState(initialState);
 
@@ -30,9 +30,11 @@ const CommentForm = (props) => {
     const fetchReview = async () => {
       const locationData = await locationService.show(locationId);
       const foundReview = locationData.reviews.find((review) => {
-        return review._id === locationId;
+        return review._id === reviewId;
       });
-      setFormData(foundReview);
+      if (foundReview) {
+        setFormData({ description: foundReview.description });
+      }
     };
     if (locationId && reviewId) fetchReview();
   }, [locationId, reviewId]);
@@ -40,8 +42,14 @@ const CommentForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="text-input">Your review:</label>
-      <textarea required type="text" name="text" id="text-input" value={formData.text} onChange={handleChange} />
-      <button type="submit">SUBMIT COMMENT</button>
+      <textarea
+        required
+        name="description"
+        id="text-input"
+        value={formData.description}
+        onChange={handleChange}
+      />
+      <button type="submit">SUBMIT REVIEW</button>
     </form>
   );
 };

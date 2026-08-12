@@ -1,9 +1,9 @@
 import { Link } from "react-router";
 
-const LocationList = (props) => {
+const LocationList = ({ locations = [] }) => {
   return (
     <main className="hoot-list">
-      {props.locations.map((location) => (
+      {locations.map((location) => (
         <Link key={location._id} to={`/locations/${location._id}`}>
           <article className="card">
             <header

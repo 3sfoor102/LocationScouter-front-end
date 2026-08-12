@@ -23,10 +23,12 @@ const App = () => {
   const [user, setUser] = useState(getUserFromToken());
   const [locations, setLocations] = useState([]);
 
-  useEffect(() => {
+useEffect(() => {
     const fetchAllLocations = async () => {
       const locationsData = await locationService.index();
-      setLocations(locationsData);
+      if (locationsData && locationsData.length !== undefined) {
+        setLocations(locationsData);
+      }
     };
     if (user) fetchAllLocations();
   }, [user]);
@@ -38,7 +40,7 @@ const App = () => {
   };
 
   const handleDeleteLocation = async (locationId) => {
-    await locationService.deleteHoot(locationId);
+    await locationService.deleteLocation(locationId); // Note: fixed from deleteHoot to deleteLocation
     setLocations(locations.filter((location) => location._id !== locationId));
     navigate("/locations");
   };
@@ -67,15 +69,7 @@ const App = () => {
                 path="/locations"
                 element={<LocationList locations={locations} />}
               />
-              <Route
-                path="/locations/:locationId"
-                element={
-                  <LocationDetails
-                    user={user}
-                    handleDeleteLocation={handleDeleteLocation}
-                  />
-                }
-              />
+              {/* SPECIFIC ROUTES MUST COME BEFORE PARAMETERIZED ROUTES */}
               <Route
                 path="/locations/new"
                 element={<LocationForm handleAddLocation={handleAddLocation} />}
@@ -84,6 +78,15 @@ const App = () => {
                 path="/locations/:locationId/edit"
                 element={
                   <LocationForm handleUpdateLocation={handleUpdateLocation} />
+                }
+              />
+              <Route
+                path="/locations/:locationId"
+                element={
+                  <LocationDetails
+                    user={user}
+                    handleDeleteLocation={handleDeleteLocation}
+                  />
                 }
               />
               <Route

@@ -5,17 +5,20 @@ const index = async () => {
     const res = await fetch(BASE_URL, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
+    if (!res.ok) return []; // <-- Failsafe: Returns empty array on 401 error
     return res.json();
   } catch (error) {
     console.log(error);
+    return []; // <-- Failsafe: Returns empty array on network crash
   }
 };
 
-const show = async (hootId) => {
+const show = async (locationId) => {
   try {
-    const res = await fetch(`${BASE_URL}/${hootId}`, {
+    const res = await fetch(`${BASE_URL}/${locationId}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
+    if (!res.ok) throw new Error("Failed to fetch location");
     return res.json();
   } catch (error) {
     console.log(error);
@@ -38,9 +41,9 @@ const create = async (locationFormData) => {
   }
 };
 
-const deleteHoot = async (hootId) => {
+const deleteLocation = async (locationId) => {
   try {
-    const res = await fetch(`${BASE_URL}/${hootId}`, {
+    const res = await fetch(`${BASE_URL}/${locationId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -52,15 +55,15 @@ const deleteHoot = async (hootId) => {
   }
 };
 
-async function update(hootId, hootFormData) {
+async function update(locationId, locationFormData) {
   try {
-    const res = await fetch(`${BASE_URL}/${hootId}`, {
+    const res = await fetch(`${BASE_URL}/${locationId}`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(hootFormData),
+      body: JSON.stringify(locationFormData),
     });
     return res.json();
   } catch (error) {
@@ -76,9 +79,9 @@ export const getUploadSignature = async () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     });
-    
+
     if (!res.ok) throw new Error("Failed to get signature");
-    
+
     return await res.json();
   } catch (error) {
     console.error(error);
@@ -86,4 +89,4 @@ export const getUploadSignature = async () => {
   }
 };
 
-export { index, show, create, deleteHoot, update };
+export { index, show, create, deleteLocation, update };
