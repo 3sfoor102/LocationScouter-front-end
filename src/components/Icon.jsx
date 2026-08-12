@@ -1,5 +1,3 @@
-// src/components/Icon.jsx
-
 import Add from '../assets/images/add.svg'
 import Edit from '../assets/images/edit.svg'
 import News from '../assets/images/news.svg'
