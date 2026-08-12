@@ -93,7 +93,11 @@ const LocationDetails = (props) => {
                 <span className="score-number">
                   {location.author?.points || 0}
                 </span>
-                <span className="score-status">Great</span>
+                {location.author?.points < 100 ? (
+                  <span className="score-status">Bronze Scouter</span>
+                ) : (
+                  "not yet"
+                )}
               </div>
               <span className="widget-subtext">Keep exploring!</span>
             </div>
@@ -124,15 +128,14 @@ const LocationDetails = (props) => {
               </div>
             </div>
 
-            {/* Card 2: Coordinates (Fixed) */}
             <div className="widget-card mini-widget">
-              <span className="widget-title">Coordinates</span>
+              <span className="widget-title">Humidity</span>
               <span className="mini-value coordinate-font-adjust">
-                {location.lat ? location.lat.toFixed(2) : "N/A"}
+                {weather?.humidity}%{" "}
               </span>
               <div className="mini-footer">
                 <span className="widget-subtext coordinate-subtext-adjust">
-                  Lng: {location.lng ? location.lng.toFixed(2) : "N/A"}
+                  In Bahrain? Always Hot ::(
                 </span>
               </div>
             </div>
@@ -244,55 +247,68 @@ const LocationDetails = (props) => {
         </div>
       )}
 
-      <footer className="hoot-footer footer-override">
-        <section className="footer-section-width">
-          <h3 className="reviews-header-style">Reviews</h3>
-          <ReviewForm handleAddReview={handleAddReview} />
+      {/* --- NEW REVIEWS SECTION --- */}
+      <footer className="reviews-section">
+        <div className="reviews-container">
+          <h3 className="section-title">Reviews</h3>
 
-          <div className="reviews-container-spacing">
+          <div className="review-form-wrapper">
+            <ReviewForm handleAddReview={handleAddReview} />
+          </div>
+
+          <div className="reviews-list">
             {!location.reviews.length && (
-              <p className="no-reviews-text">
-                No reviews yet. Be the first to review this location!
-              </p>
+              <div className="empty-state">
+                <p>No reviews yet. Be the first to review this location!</p>
+              </div>
             )}
 
             {location.reviews.map((review) => (
-              <article key={review._id} className="review-card">
-                <div className="review-row-flex">
-                  <p className="review-author-text">
-                    {review.author?.username || "Unknown User"}
-                  </p>
-                  <p className="review-date-text">
-                    {new Date(review.createdAt).toLocaleDateString()}
-                  </p>
+              <article key={review._id} className="modern-review-card">
+                <header className="review-header">
+                  <div className="reviewer-info">
+                    <div className="reviewer-avatar">
+                      {(review.author?.username || "U").charAt(0).toUpperCase()}
+                    </div>
+                    <span className="reviewer-name">
+                      {review.author?.username || "Unknown User"}
+                    </span>
+                  </div>
+                  <time className="review-date">
+                    {new Date(review.createdAt).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </time>
+                </header>
+
+                <div className="review-body">
+                  <p>{review.description}</p>
                 </div>
 
-                <p className="review-desc-style">{review.description}</p>
-
                 {review.author?._id === props.user?._id && props.user && (
-                  <div className="actions review-actions-flex">
+                  <footer className="review-actions">
                     <button
                       onClick={() =>
-                        navigate(
-                          `/locations/${locationId}/reviews/${review._id}/edit`,
-                        )
+                        navigate(`/locations/${locationId}/reviews/${review._id}/edit`)
                       }
-                      className="btn-review-edit"
+                      className="btn-text edit-btn"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteReview(review._id)}
-                      className="btn-review-delete"
+                      className="btn-text delete-btn"
                     >
                       Delete
                     </button>
-                  </div>
+                  </footer>
                 )}
               </article>
             ))}
           </div>
-        </section>
+        </div>
       </footer>
     </article>
   );
