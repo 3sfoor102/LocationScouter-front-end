@@ -1,83 +1,111 @@
-#root {
-  min-height: 100vh;
-}
-
 .app-main {
   display: flex;
   justify-content: center;
   width: 100%;
-  padding: 48px 24px;
-}
-
-@media (max-width: 600px) {
-  .app-main {
-    padding: 32px 16px;
-  }
+  padding: 24px 16px;
+  flex: 1;
 }
 
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var( --color-surface);
-  padding: 2px 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .nav-brand {
-  font-weight: bolder;
+  font-weight: 800;
   font-size: 1.5rem;
-  color: var(--color-primary-dark);
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: -0.5px;
 }
 
 nav ul {
   display: flex;
-  gap: 16px;
+  gap: 20px;
   list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+nav a {
+  color: var(--color-text-light);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 nav a:hover {
   color: var(--color-primary);
 }
 
-
 form {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  font-weight: 600;
+  gap: 20px;
+  font-weight: 500;
+}
+
+form label {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  margin-bottom: -12px;
 }
 
 form input, textarea, select {
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid var(--color-primary);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-light);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-form input:focus, textarea:focus, select:focus {
+form input:focus, textarea:focus {
   border-color: var(--color-primary);
-  outline: 2px solid var(--color-primary-soft);
+  box-shadow: 0 0 0 1px var(--color-primary);
+  outline: none;
+  background-color: var(--color-surface);
 }
 
 .actions {
   display: flex;
   gap: 12px;
-}
-
-.actions button {
-  flex: 1;
-}
-
-button:hover {
-  background-color: var(--color-primary-dark);
+  margin-top: 8px;
 }
 
 button {
   background-color: var(--color-primary);
-  color: white;
-  border-radius: 8px;
+  color: var(--color-surface);
+  border-radius: var(--radius-pill);
   border: none;
-  padding: 12px 18px;
-  font-weight: bold;
+  padding: 16px 24px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:hover {
+  background-color: var(--color-primary-dark);
 }
 
 button:disabled {
@@ -85,103 +113,421 @@ button:disabled {
   cursor: not-allowed;
 }
 
-.card header {
-  margin-bottom: 24px;
-  text-align: center;
-}
-  
 .card {
   width: 100%;
-  max-width: 440px;
-  padding: 32px;
+  max-width: 500px;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
+  margin: 0 auto;
 }
 
 .hoot-card {
-  max-width: 700px;
+  max-width: 800px;
+}
+
+.card-image-header {
+  margin: -24px -24px 24px -24px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.card-image-header::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background: linear-gradient(to bottom, transparent, var(--color-surface));
 }
 
 .hoot-header {
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 16px;
+  position: relative;
+  z-index: 10;
+  margin-top: -60px;
 }
 
 .hoot-header h2 {
   margin-bottom: 8px;
+  font-size: 2.2rem;
+  letter-spacing: -0.5px;
 }
 
 .hoot-category {
-  display: inline-block;
+  background-color: var(--color-surface-light);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
   margin-bottom: 12px;
-  padding: 4px 10px;
-  background-color: var(--color-primary-soft);
-  color: var(--color-primary-dark);
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--color-border);
 }
 
 .hoot-author {
-  margin-bottom: 0;
   color: var(--color-text-light);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.hoot-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: var(--max-width-desktop);
+}
+
+.hoot-list a {
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.hoot-list .card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 0;
+}
+
+.hoot-list .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
 }
 
 .hoot-footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
-  margin-top: 24px;
-  padding-top: 16px;
+  margin-top: auto;
+  padding-top: 20px;
   border-top: 1px solid var(--color-border);
   color: var(--color-text-light);
   font-size: 0.85rem;
 }
 
-.hoot-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
-  width: 100%;
-  max-width: 1200px; 
-  margin: 0 auto; 
-  justify-items: center; 
+.weather-container {
+  background-color: var(--color-surface-light);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin: 24px 0;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.hoot-list a {
-  display: block;
-  width: 100%;
-  text-decoration: none;
+.map-picker-wrapper, .location-map-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 12px;
 }
 
 .loader {
-  width: 60px;
-  height: 60px;
-  border: 8px solid #e0e0e0;
-  border-top-color: #b67c95;
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--color-border);
+  border-top-color: var(--color-primary);
   border-radius: 50%;
-  animation: spin 1.0s linear infinite;
+  animation: spin 1s linear infinite;
+  margin: 100px auto;
 }
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.icon {
-  height: 2em;
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .hoot-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .card {
+    border-radius: var(--radius-lg);
+    padding: 16px;
+  }
+
+  .card-image-header {
+    margin: -16px -16px 16px -16px;
+    height: 220px;
+  }
+  
+  .weather-container > div {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
 }
 
-.map-picker-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
+/* -----------------------------
+   LOCATION DETAILS ENHANCEMENTS
+----------------------------- */
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
-.map-picker-wrapper {
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  margin-top: 8px;
+.points-badge {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Adds a little star icon next to the points */
+.points-badge::before {
+  content: '★'; 
+  color: #F59E0B; /* Subtle gold */
+  font-size: 1.1em;
+}
+
+.review-card {
+  background-color: var(--color-surface-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+.metrics-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 20px;
+  margin: 20px 0;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.metric-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.points-badge {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.points-badge::before {
+  content: '★'; 
+  color: #F59E0B;
+  font-size: 1.1em;
+}
+
+.weather-metric {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-card {
+  background-color: var(--color-surface-light);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+/* -----------------------------
+   DASHBOARD WIDGETS
+----------------------------- */
+.dashboard-widgets {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.widget-card {
+  background-color: var(--color-surface-light);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.widget-title {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.widget-subtext {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+
+/* Top Wide Card */
+.score-widget {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score-value-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.score-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.score-status {
+  color: #10B981; /* A subtle green to match the image's "Great" */
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* CSS Circular Progress Ring */
+.progress-ring {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  /* Adjust the 75% below to change how full the ring is */
+  background: conic-gradient(var(--color-text) 75%, var(--color-border) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring::before {
+  content: "";
+  width: 54px;
+  height: 54px;
+  background-color: var(--color-surface-light); /* Matches widget background */
+  border-radius: 50%;
+}
+
+/* Bottom 3-Card Grid */
+.widget-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.mini-widget {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.mini-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.mini-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.weather-val-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.mini-weather-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: -10px;
+}
+
+/* Responsive constraints for the widgets */
+@media (max-width: 600px) {
+  .widget-grid-3 {
+    gap: 8px;
+  }
+  
+  .mini-widget {
+    padding: 12px;
+  }
+  
+  .mini-value {
+    font-size: 1.4rem;
+  }
+
+  .widget-title {
+    font-size: 0.75rem;
+  }
 }

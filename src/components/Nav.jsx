@@ -15,10 +15,10 @@ const Nav = (props) => {
         <ul>
           <li>Welcome, {props.user.username}!</li>
           <li>
-            <Link to="/locations">LOCATIONS</Link>
+            <Link to="/locations">Explore</Link>
           </li>
           <li>
-            <Link to="/locations/new">NEW LOCATION</Link>
+            <Link to="/locations/new">Scout Location</Link>
           </li>
           <li>
             <Link to="/" onClick={handleSignOut}>

@@ -6,11 +6,11 @@ import { useState, useEffect } from "react";
 import SignInForm from "./pages/SignInForm";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
-import HootList from "./pages/LocationList";
+import LocationList from "./pages/LocationList";
 import * as locationService from "./services/locations";
-import HootDetails from "./pages/LocationDetails";
-import HootForm from "./pages/LocationForm";
-import CommentForm from "./components/ReviewForm";
+import LocationDetails from "./pages/LocationDetails";
+import LocationForm from "./pages/LocationForm";
+import ReviewForm from "./components/ReviewForm";
 
 const getUserFromToken = () => {
   const token = localStorage.getItem("token");
@@ -20,7 +20,6 @@ const getUserFromToken = () => {
 
 const App = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState(getUserFromToken());
   const [locations, setLocations] = useState([]);
 
@@ -39,7 +38,7 @@ const App = () => {
   };
 
   const handleDeleteLocation = async (locationId) => {
-    const deletedLocation = await locationService.deleteHoot(locationId);
+    await locationService.deleteHoot(locationId);
     setLocations(locations.filter((location) => location._id !== locationId));
     navigate("/locations");
   };
@@ -66,12 +65,12 @@ const App = () => {
             <>
               <Route
                 path="/locations"
-                element={<HootList locations={locations} />}
+                element={<LocationList locations={locations} />}
               />
               <Route
                 path="/locations/:locationId"
                 element={
-                  <HootDetails
+                  <LocationDetails
                     user={user}
                     handleDeleteLocation={handleDeleteLocation}
                   />
@@ -79,22 +78,19 @@ const App = () => {
               />
               <Route
                 path="/locations/new"
-                element={<HootForm handleAddLocation={handleAddLocation} />}
+                element={<LocationForm handleAddLocation={handleAddLocation} />}
               />
               <Route
                 path="/locations/:locationId/edit"
                 element={
-                  <HootForm handleUpdateLocation={handleUpdateLocation} />
+                  <LocationForm handleUpdateLocation={handleUpdateLocation} />
                 }
               />
               <Route
                 path="/locations/:locationId/reviews/:reviewId/edit"
-                element={<CommentForm />}
+                element={<ReviewForm />}
               />
-              <Route
-                path="/dashboard"
-                element={<Dashboard />}
-              />
+              <Route path="/dashboard" element={<Dashboard />} />
             </>
           ) : (
             <>

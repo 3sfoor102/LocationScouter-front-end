@@ -1,16 +1,30 @@
 :root {
-  font-family: Inter, system-ui, sans-serif;
-
-  --color-primary: #4f46e5;
-  --color-primary-dark: #4338ca;
-  --color-primary-soft: #e0e7ff;
-  --color-success: #15803d;
-  --color-text: #1f2937;
-  --color-text-light: #6b7280;
-  --color-background: #f4f6f8;
-  --color-surface: #ffffff;
-  --color-border: #d1d5db;
-  --color-error: #dc2626;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  
+  /* Bright, airy background and pure white cards */
+  --color-background: #F4F6F8;
+  --color-surface: #FFFFFF;
+  --color-surface-light: #F9FAFB;
+  
+  /* High contrast dark accents for a premium minimalist look */
+  --color-primary: #111827;
+  --color-primary-dark: #000000;
+  --color-primary-soft: #F3F4F6;
+  
+  /* Crisp, readable dark text */
+  --color-text: #111827;
+  --color-text-light: #6B7280;
+  
+  /* Soft, barely-there borders */
+  --color-border: #E5E7EB;
+  --color-error: #EF4444;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+  
+  --max-width-desktop: 1200px;
 }
 
 * {
@@ -22,22 +36,16 @@ body {
   margin: 0;
   background-color: var(--color-background);
   color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  cursor: pointer;
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img {
-  display: block;
-  max-width: 100%;
-}
-
-h1, h2, h3, p {
+h1, h2, h3, h4, p {
   margin-top: 0;
 }

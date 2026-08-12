@@ -14,17 +14,19 @@ const Dashboard = (props) => {
 
   return (
     <section>
-      <header>
+      <header style={{ marginBottom: "32px", textAlign: "center" }}>
         <h1>Welcome {props.user.username}!</h1>
-        <h2>View All the Users</h2>
+        <p style={{ color: "var(--color-text-light)" }}>View All the Users</p>
       </header>
-      {allUsers.map((user) => (
-        <div className="card">
-          <header>
-            <h1>{user.username}</h1>
-          </header>
-        </div>
-      ))}
+      <div className="hoot-list">
+        {allUsers.map((user) => (
+          <div className="card" key={user._id}>
+            <header>
+              <h2 style={{ color: "var(--color-primary)" }}>{user.username}</h2>
+            </header>
+          </div>
+        ))}
+      </div>
     </section>
   );
 };

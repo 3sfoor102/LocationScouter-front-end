@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
-
 import * as locationService from "../services/locations";
 import * as reviewsService from "../services/reviews";
 
 const CommentForm = (props) => {
   const { locationId, reviewId } = useParams();
   const navigate = useNavigate();
-
   const initialState = {
     text: "",
   };
@@ -31,7 +29,6 @@ const CommentForm = (props) => {
   useEffect(() => {
     const fetchReview = async () => {
       const locationData = await locationService.show(locationId);
-      console.log(locationData);
       const foundReview = locationData.reviews.find((review) => {
         return review._id === locationId;
       });
@@ -43,14 +40,7 @@ const CommentForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="text-input">Your review:</label>
-      <textarea
-        required
-        type="text"
-        name="text"
-        id="text-input"
-        value={formData.text}
-        onChange={handleChange}
-      />
+      <textarea required type="text" name="text" id="text-input" value={formData.text} onChange={handleChange} />
       <button type="submit">SUBMIT COMMENT</button>
     </form>
   );

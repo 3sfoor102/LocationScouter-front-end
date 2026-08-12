@@ -9,7 +9,6 @@ import axios from "axios";
 const LocationDetails = (props) => {
   const navigate = useNavigate();
   const { locationId } = useParams();
-
   const [location, setLocation] = useState(null);
   const [weather, setWeather] = useState(null);
 
@@ -27,7 +26,6 @@ const LocationDetails = (props) => {
   };
 
   const handleDeleteReview = async (reviewId) => {
-    console.log("reviewId: ", reviewId);
     await reviewService.deleteReview(locationId, reviewId);
     const filteredReviews = location.reviews.filter((review) => {
       return review._id !== reviewId;
@@ -62,105 +60,114 @@ const LocationDetails = (props) => {
 
   return (
     <article className="card hoot-card">
-      <h3>PROJECT TASK LIST</h3>
-      <ol>
-        <li>Add a link with conditional badge Visibility for user's points</li>
-        <li>Edit All the CSS layout</li>
-        <li>Fix reviews page errors</li>
-        <li>Use Cloudinary</li>
-      </ol>
-      <header className="hoot-header">
+      <header
+        className="card-image-header"
+        style={{ backgroundImage: `url(${location.imageURL})` }}
+      ></header>
+      
+      <div className="hoot-header">
         <span className="hoot-category">
           {location.description.toUpperCase()}
         </span>
-        <span className="hoot-text">
-          <p>
-            {" "}
-            Points:
-            {location.author?.points
-              ? location.author.points
-              : "Add a location to get 10 points!"}
-          </p>
-          <h3>
-            {location.author.points >= 30 && location.author.points <= 49
-              ? `You are a Scoutuer With ${location.author.points} Points !`
-              : `${location.author.username.toUpperCase()} points are ${location.author.points}`}
-          </h3>
-        </span>
         <h2>{location.title}</h2>
-        <p className="hoot-text" align="center">
-          <img src={location.imageURL} alt="a location background image" />
+        <p className="hoot-author" style={{ marginBottom: "16px" }}>
+          Scouted by <strong>{location.author?.username || "Unknown user"}</strong> on{" "}
+          {new Date(location.createdAt).toLocaleDateString()}
         </p>
 
-        <p className="hoot-author">
-          Posted by {location.author?.username || "Unknown user"} on{" "}
-          <span>{new Date(location.createdAt).toLocaleDateString()}</span>
-        </p>
+        {/* --- Dashboard Widget Layout --- */}
+        <div className="dashboard-widgets">
+          
+          {/* Top Wide Card: Score */}
+          <div className="widget-card score-widget">
+            <div className="score-info">
+              <span className="widget-title">Author Scout Score</span>
+              <div className="score-value-row">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m8 3 4 8 5-5 5 15H2L8 3z"/>
+                </svg>
+                <span className="score-number">{location.author?.points || 0}</span>
+                <span className="score-status">Great</span>
+              </div>
+              <span className="widget-subtext">Keep exploring!</span>
+            </div>
+            
+            <div className="progress-ring"></div>
+          </div>
+
+          {/* Bottom Grid: 3 Square Cards */}
+          <div className="widget-grid-3">
+            
+            {/* Card 1: Reviews */}
+            <div className="widget-card mini-widget">
+              <span className="widget-title">Reviews</span>
+              <span className="mini-value">{location.reviews?.length || 0}</span>
+              <div className="mini-footer">
+                <span className="widget-subtext">Total</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+            </div>
+
+            {/* Card 2: Coordinates */}
+            <div className="widget-card mini-widget">
+              <span className="widget-title">Coordinates</span>
+              <span className="mini-value" style={{ fontSize: "1.2rem" }}>
+                {location.lat ? location.lat.toFixed(2) : '-'}
+              </span>
+              <div className="mini-footer">
+                <span className="widget-subtext">Latitude</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-light)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+            </div>
+
+            {/* Card 3: Weather */}
+            {weather ? (
+              <div className="widget-card mini-widget">
+                <span className="widget-title">Weather</span>
+                <div className="weather-val-row">
+                  <span className="mini-value" style={{ marginBottom: 0 }}>{weather.temp_c}°C</span>
+                  <img src={weather.condition.icon} alt="weather" className="mini-weather-icon" />
+                </div>
+                <div className="mini-footer">
+                  <span className="widget-subtext" style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginTop: "8px" }}>
+                    {weather.condition.text}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div className="widget-card mini-widget">
+                <span className="widget-title">Weather</span>
+                <span className="mini-value">--</span>
+                <span className="widget-subtext">Loading...</span>
+              </div>
+            )}
+            
+          </div>
+        </div>
+        {/* --- End Dashboard Widgets --- */}
 
         {location.author?._id === props.user?._id && (
-          <div className="actions">
-            <button onClick={() => navigate(`/locations/${locationId}/edit`)}>
+          <div className="actions" style={{ marginBottom: "24px" }}>
+            <button onClick={() => navigate(`/locations/${locationId}/edit`)} style={{ backgroundColor: "var(--color-surface-light)", color: "var(--color-text)", border: "1px solid var(--color-border)" }}>
               Edit
             </button>
-            <button onClick={() => props.handleDeleteLocation(locationId)}>
+            <button onClick={() => props.handleDeleteLocation(locationId)} style={{ backgroundColor: "var(--color-error)", color: "#fff" }}>
               Delete
             </button>
           </div>
         )}
-      </header>
+      </div>
 
-      <p className="hoot-text">{location.description}</p>
-      {weather && (
-        <div
-          className="weather-container"
-          style={{
-            margin: "20px 0",
-            padding: "15px",
-            backgroundColor: "#f8f9fa",
-            borderRadius: "8px",
-            border: "1px solid #e0e0e0",
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>Current Scout Conditions</h3>
-          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                fontWeight: "bold",
-              }}
-            >
-              <img src={weather.condition.icon} alt="weather icon" />
-              <span>{weather.temp_c}°C</span>
-            </div>
-            <div>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Cloud Cover:</strong> {weather.cloud}%
-              </p>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Visibility:</strong> {weather.vis_km} km
-              </p>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Condition:</strong> {weather.condition.text}
-              </p>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Wind KPH:</strong> {weather.wind_kph}
-              </p>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Humidity:</strong> {weather.humidity}
-              </p>
-              <p style={{ margin: "5px 0" }}>
-                <strong>Feels Like:</strong> {weather.feelslike_c}
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+      <p style={{ lineHeight: "1.6" }}>{location.description}</p>
 
       {location.lat && location.lng && (
-        <div className="location-map-container">
-          <h3>Location Map</h3>
+        <div className="location-map-container" style={{ marginTop: "32px" }}>
+          <h3 style={{ marginBottom: "12px" }}>Location Map</h3>
           <div className="location-map-wrapper">
             <Map
               height={300}
@@ -170,57 +177,71 @@ const LocationDetails = (props) => {
               <Marker width={50} anchor={[location.lat, location.lng]} />
             </Map>
           </div>
-          <div style={{ marginTop: "10px", textAlign: "center" }}>
+          <div style={{ marginTop: "16px" }}>
             <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${location.lat},${location.lng}`}
               target="_blank"
               rel="noreferrer"
               style={{
-                display: "inline-block",
-                padding: "10px 20px",
-                backgroundColor: "#4285F4",
-                color: "white",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "16px 24px",
+                backgroundColor: "var(--color-primary)",
+                color: "var(--color-surface)",
                 textDecoration: "none",
-                borderRadius: "5px",
+                borderRadius: "var(--radius-pill)",
                 fontWeight: "bold",
+                width: "100%",
+                transition: "background-color 0.2s ease"
               }}
             >
-              🚗 Get Directions
+              Get Directions
             </a>
           </div>
         </div>
       )}
 
-      <footer className="hoot-footer">
-        <section>
-          <h2>Reviews</h2>
+      <footer className="hoot-footer" style={{ borderTop: "none", marginTop: "40px", paddingTop: 0 }}>
+        <section style={{ width: "100%" }}>
+          <h3 style={{ marginBottom: "16px", borderBottom: "1px solid var(--color-border)", paddingBottom: "12px" }}>Reviews</h3>
           <ReviewForm handleAddReview={handleAddReview} />
-          {!location.reviews.length && <p>There are no reviews.</p>}
-          {location.reviews.map((review) => (
-            <article key={review._id}>
-              <header></header>
-              <p>{`${review.author?.username || "Unknown User"} posted on ${new Date(review.createdAt).toLocaleDateString()}`}</p>
-              <p>{review.description}</p>
-
-              {review.author?._id === props.user?._id && props.user && (
-                <div className="actions">
-                  <button
-                    onClick={() =>
-                      navigate(
-                        `/locations/${locationId}/reviews/${review._id}/edit`,
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-
-                  <button onClick={() => handleDeleteReview(review._id)}>
-                    Delete
-                  </button>
+          
+          <div style={{ marginTop: "32px" }}>
+            {!location.reviews.length && <p style={{ color: "var(--color-text-light)" }}>No reviews yet. Be the first to review this location!</p>}
+            
+            {location.reviews.map((review) => (
+              <article key={review._id} className="review-card">
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "8px" }}>
+                  <p style={{ color: "var(--color-text)", fontWeight: "bold", margin: 0 }}>
+                    {review.author?.username || "Unknown User"}
+                  </p>
+                  <p style={{ fontSize: "0.8rem", color: "var(--color-text-light)", margin: 0 }}>
+                    {new Date(review.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
-              )}
-            </article>
-          ))}
+                
+                <p style={{ margin: "12px 0", lineHeight: "1.5" }}>{review.description}</p>
+                
+                {review.author?._id === props.user?._id && props.user && (
+                  <div className="actions" style={{ marginTop: "16px", gap: "8px" }}>
+                    <button
+                      onClick={() => navigate(`/locations/${locationId}/reviews/${review._id}/edit`)}
+                      style={{ padding: "8px 16px", fontSize: "0.85rem", backgroundColor: "var(--color-surface)", color: "var(--color-text)", border: "1px solid var(--color-border)" }}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteReview(review._id)}
+                      style={{ padding: "8px 16px", fontSize: "0.85rem", backgroundColor: "var(--color-surface)", color: "var(--color-error)", border: "1px solid var(--color-border)" }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
         </section>
       </footer>
     </article>
