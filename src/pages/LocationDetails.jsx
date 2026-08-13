@@ -247,7 +247,6 @@ const LocationDetails = (props) => {
         </div>
       )}
 
-      {/* --- NEW REVIEWS SECTION --- */}
       <footer className="reviews-section">
         <div className="reviews-container">
           <h3 className="section-title">Reviews</h3>
@@ -289,14 +288,7 @@ const LocationDetails = (props) => {
 
                 {review.author?._id === props.user?._id && props.user && (
                   <footer className="review-actions">
-                    <button
-                      onClick={() =>
-                        navigate(`/locations/${locationId}/reviews/${review._id}/edit`)
-                      }
-                      className="btn-text edit-btn"
-                    >
-                      Edit
-                    </button>
+            
                     <button
                       onClick={() => handleDeleteReview(review._id)}
                       className="btn-text delete-btn"
