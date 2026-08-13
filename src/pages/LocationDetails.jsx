@@ -288,7 +288,6 @@ const LocationDetails = (props) => {
 
                 {review.author?._id === props.user?._id && props.user && (
                   <footer className="review-actions">
-            
                     <button
                       onClick={() => handleDeleteReview(review._id)}
                       className="btn-text delete-btn"

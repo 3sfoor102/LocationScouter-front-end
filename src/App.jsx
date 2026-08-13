@@ -69,7 +69,6 @@ const App = () => {
                 path="/locations"
                 element={<LocationList locations={locations} />}
               />
-              {/* SPECIFIC ROUTES MUST COME BEFORE PARAMETERIZED ROUTES */}
               <Route
                 path="/locations/new"
                 element={<LocationForm handleAddLocation={handleAddLocation} />}

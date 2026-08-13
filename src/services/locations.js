@@ -5,11 +5,11 @@ const index = async () => {
     const res = await fetch(BASE_URL, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
-    if (!res.ok) return []; // <-- Failsafe: Returns empty array on 401 error
+    if (!res.ok) return []; 
     return res.json();
   } catch (error) {
     console.log(error);
-    return []; // <-- Failsafe: Returns empty array on network crash
+    return [];
   }
 };
 

@@ -5,7 +5,7 @@ import * as locationService from "../services/locations";
 
 const LocationForm = (props) => {
   const { locationId } = useParams();
-  
+
   const initialState = {
     title: "",
     description: "",
@@ -13,7 +13,7 @@ const LocationForm = (props) => {
     lat: null,
     lng: null,
   };
-  
+
   const [formData, setFormData] = useState(initialState);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -119,7 +119,10 @@ const LocationForm = (props) => {
           />
 
           {!formData.imageURL && !isUploading && (
-            <label htmlFor="image-upload-input" className="image-dropzone-label">
+            <label
+              htmlFor="image-upload-input"
+              className="image-dropzone-label"
+            >
               <svg
                 width="32"
                 height="32"
@@ -136,7 +139,9 @@ const LocationForm = (props) => {
                 <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
               </svg>
               <span>Click to upload scout photo</span>
-              <span className="image-dropzone-sub">PNG, JPG, WEBP up to 10MB</span>
+              <span className="image-dropzone-sub">
+                PNG, JPG, WEBP up to 10MB
+              </span>
             </label>
           )}
 
@@ -155,8 +160,23 @@ const LocationForm = (props) => {
                 alt="Location Preview"
                 className="card-image-header"
               />
-              <div style={{ marginTop: "12px", display: "flex", justifyContent: "flex-end" }}>
-                <label htmlFor="image-upload-input" className="btn-secondary-action" style={{ cursor: "pointer", padding: "8px 16px", fontSize: "0.85rem", display: "inline-block" }}>
+              <div
+                style={{
+                  marginTop: "12px",
+                  display: "flex",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <label
+                  htmlFor="image-upload-input"
+                  className="btn-secondary-action"
+                  style={{
+                    cursor: "pointer",
+                    padding: "8px 16px",
+                    fontSize: "0.85rem",
+                    display: "inline-block",
+                  }}
+                >
                   Change Image
                 </label>
               </div>

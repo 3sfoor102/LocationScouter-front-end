@@ -5,12 +5,12 @@ import { useNavigate } from "react-router";
 const SignUpForm = (props) => {
   const navigate = useNavigate();
   const initialState = {
-    username: '',
-    password: '',
-    confirmPassword: '',
+    username: "",
+    password: "",
+    confirmPassword: "",
   };
   const [formData, setFormData] = useState(initialState);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -22,14 +22,18 @@ const SignUpForm = (props) => {
       const newUser = await signUp(formData);
       props.setUser(newUser);
       setFormData(initialState);
-      navigate('/');
+      navigate("/");
     } catch (err) {
       setMessage(err.message);
     }
   };
 
   const isFormValid = () => {
-    if(formData.username && formData.password && formData.password === formData.confirmPassword) {
+    if (
+      formData.username &&
+      formData.password &&
+      formData.password === formData.confirmPassword
+    ) {
       return true;
     } else return false;
   };
@@ -42,14 +46,43 @@ const SignUpForm = (props) => {
       </header>
       <form onSubmit={handleSubmit}>
         Username:
-        <input type="text" name="username" onChange={handleChange} value={formData.username} required />
+        <input
+          type="text"
+          name="username"
+          onChange={handleChange}
+          value={formData.username}
+          required
+        />
         Password:
-        <input type="password" name="password" onChange={handleChange} value={formData.password} required />
+        <input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          value={formData.password}
+          required
+        />
         Confirm Password:
-        <input type="password" name="confirmPassword" onChange={handleChange} value={formData.confirmPassword} required />
+        <input
+          type="password"
+          name="confirmPassword"
+          onChange={handleChange}
+          value={formData.confirmPassword}
+          required
+        />
         <div className="actions">
-          <button type="submit" disabled={!isFormValid()}>Sign Up</button>
-          <button type="button" onClick={() => navigate('/')} style={{ backgroundColor: "var(--color-surface-light)", color: "var(--color-text)" }}>Cancel</button>
+          <button type="submit" disabled={!isFormValid()}>
+            Sign Up
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("/")}
+            style={{
+              backgroundColor: "var(--color-surface-light)",
+              color: "var(--color-text)",
+            }}
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </section>

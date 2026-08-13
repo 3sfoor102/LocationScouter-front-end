@@ -1,29 +1,29 @@
 :root {
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-  
-  /* Bright, airy background and pure white cards */
-  --color-background: #F4F6F8;
-  --color-surface: #FFFFFF;
-  --color-surface-light: #F9FAFB;
-  
-  /* High contrast dark accents for a premium minimalist look */
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    sans-serif;
+
+  --color-background: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-surface-light: #f9fafb;
+
   --color-primary: #111827;
   --color-primary-dark: #000000;
-  --color-primary-soft: #F3F4F6;
-  
-  /* Crisp, readable dark text */
+  --color-primary-soft: #f3f4f6;
+
   --color-text: #111827;
-  --color-text-light: #6B7280;
-  
-  /* Soft, barely-there borders */
-  --color-border: #E5E7EB;
-  --color-error: #EF4444;
-  
+  --color-text-light: #6b7280;
+
+  --color-border: #e5e7eb;
+  --color-error: #ef4444;
+
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 24px;
   --radius-pill: 9999px;
-  
+
   --max-width-desktop: 1200px;
 }
 
@@ -46,6 +46,10 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, p {
+h1,
+h2,
+h3,
+h4,
+p {
   margin-top: 0;
 }
